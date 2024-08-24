@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage[margin=2.54cm]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{vscStyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{orange},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=vscStyle}
+
+
+\title{QuadraticEquation.java Documentation}
+\author{FRC Team 3161 Tronic Titans}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{lstlisting}[language=Java]
+
+public class QuadraticEquation {
+\end{lstlisting}
+
+ coefficients of quadratic equation in standard form $ax^2 + bx + c = 0$
+
+\begin{lstlisting}[language=Java]
+    private final double a,b,c;
+
+\end{lstlisting}
+
+ constructor method to set the coefficients of the quadratic in standard form
+
+\begin{lstlisting}[language=Java]
+    public QuadraticEquation(double a, double b, double c){
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+\end{lstlisting}
+
+ retrieval method for coefficient a
+
+\begin{lstlisting}[language=Java]
+    public double getA(){
+        return a;
+    }
+
+\end{lstlisting}
+
+ retrieval method for coefficient b
+
+\begin{lstlisting}[language=Java]
+    public double getB(){
+        return b;
+    }
+
+\end{lstlisting}
+
+ retrieval method for coefficient c
+
+\begin{lstlisting}[language=Java]
+    public double getC(){
+        return c;
+    }
+
+\end{lstlisting}
+
+ method to return zeroes of quadratic equation making use of the quadratic formula
+ $x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+
+\begin{lstlisting}[language=Java]
+    public double[] getRoots(){
+        double disc = Math.pow(getB(),2) - 4*getA()*getC(); // the discriminant
+
+        if (disc >= 0){
+            double[] roots = new double[2];
+            roots[0] = (-1*getB() + Math.sqrt(disc)) / (2*getA()); // the root using +
+            roots[1] = (-1*getB() + Math.sqrt(disc)) / (2*getA()); // the root using -
+            return roots;
+        } else {
+            return null; // the case of no roots
+        }
+    }
+
+\end{lstlisting}
+
+ method to print the x and y coordinates of the vertex of the parabola
+
+\begin{lstlisting}[language=Java]
+    public void printVertex(){
+        double[] vertex = new double[2];
+        vertex[0] = -1 * getB() / (2*getA()); // x coordinate
+        vertex[1] = getA()*Math.pow(vertex[0],2) + getB()*vertex[0] + getC(); // y coordinate
+
+        System.out.println("The vertex of the parabola is located at (x,y) = " + Arrays.toString(vertex));
+    }
+}
+\end{lstlisting}
+
+\end{document}

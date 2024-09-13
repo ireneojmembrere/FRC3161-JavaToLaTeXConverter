@@ -43,27 +43,39 @@ public class Converter {
 
             // comments will not be formatted in the .tex file (raw text)
             if (isComment(line)){
-                if (previousCode){
-                    writer.write("\\end{lstlisting}\n\n");
+                try {
+                    if (previousCode){
+                        writer.write("\\end{lstlisting}\n\n");
+                    }
+                    writer.write(getTrimmedComment(line) + "\n");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                writer.write(getTrimmedComment(line) + "\n");
                 previousCode = false;
                 previousComment = true;
             }
             // executable code will be formatted using the lstlisting environment
             else {
-                if (previousComment){
-                    writer.write("\n\\begin{lstlisting}[language=Java]\n");
+                try {
+                    if (previousComment){
+                        writer.write("\n\\begin{lstlisting}[language=Java]\n");
+                    }
+                    writer.write(line + "\n");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                writer.write(line + "\n");
                 previousCode = true;
                 previousComment = false;
             }
         }
 
-        // end the last lstlisting environment (if it exists)
-        if (previousCode){
-            writer.write("\\end{lstlisting}\n\n");
+        try {
+            // end the last lstlisting environment (if it exists)
+            if (previousCode){
+                writer.write("\\end{lstlisting}\n\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         // close the files and end the .tex document
@@ -74,36 +86,40 @@ public class Converter {
 
     // method that writes the preamble of the .tex file
     public static void preamble(File inFile, FileWriter writer) throws IOException{
-        writer.write("\\documentclass{article}\n");
-        writer.write("\\usepackage[margin=2.54cm]{geometry}\n");
-        writer.write("\\usepackage{listings}\n");
-        writer.write("\\usepackage{xcolor}\n\n");
-        writer.write("\\definecolor{codegray}{rgb}{0.5,0.5,0.5}\n");
-        writer.write("\\definecolor{codegreen}{rgb}{0,0.6,0}\n");
-        writer.write("\\definecolor{backcolour}{rgb}{0.95,0.95,0.92}\n");
-        writer.write("\\lstdefinestyle{vscStyle}{\n");
-        writer.write("    backgroundcolor=\\color{backcolour},\n");
-        writer.write("    commentstyle=\\color{codegreen},\n");
-        writer.write("    keywordstyle=\\color{blue},\n");
-        writer.write("    numberstyle=\\tiny\\color{codegray},\n");
-        writer.write("    stringstyle=\\color{orange},\n");
-        writer.write("    basicstyle=\\ttfamily\\footnotesize,\n");
-        writer.write("    breakatwhitespace=false,\n");
-        writer.write("    breaklines=true,\n");
-        writer.write("    captionpos=b,\n");
-        writer.write("    keepspaces=true,\n");
-        writer.write("    numbers=left,\n");
-        writer.write("    numbersep=5pt,\n");
-        writer.write("    showspaces=false,\n");
-        writer.write("    showstringspaces=false,\n");
-        writer.write("    showtabs=false,\n");
-        writer.write("    tabsize=2\n");
-        writer.write("}\n");
-        writer.write("\\lstset{style=vscStyle}\n\n");
-        writer.write("\n\\title{" + inFile.getName() + " Documentation}\n");
-        writer.write("\\author{FRC Team 3161 Tronic Titans}\n\n");
-        writer.write("\\begin{document}\n\n");
-        writer.write("\\maketitle\n\n");
+        try {
+            writer.write("\\documentclass{article}\n");
+            writer.write("\\usepackage[margin=2.54cm]{geometry}\n");
+            writer.write("\\usepackage{listings}\n");
+            writer.write("\\usepackage{xcolor}\n\n");
+            writer.write("\\definecolor{codegray}{rgb}{0.5,0.5,0.5}\n");
+            writer.write("\\definecolor{codegreen}{rgb}{0,0.6,0}\n");
+            writer.write("\\definecolor{backcolour}{rgb}{0.95,0.95,0.92}\n");
+            writer.write("\\lstdefinestyle{vscStyle}{\n");
+            writer.write("    backgroundcolor=\\color{backcolour},\n");
+            writer.write("    commentstyle=\\color{codegreen},\n");
+            writer.write("    keywordstyle=\\color{blue},\n");
+            writer.write("    numberstyle=\\tiny\\color{codegray},\n");
+            writer.write("    stringstyle=\\color{orange},\n");
+            writer.write("    basicstyle=\\ttfamily\\footnotesize,\n");
+            writer.write("    breakatwhitespace=false,\n");
+            writer.write("    breaklines=true,\n");
+            writer.write("    captionpos=b,\n");
+            writer.write("    keepspaces=true,\n");
+            writer.write("    numbers=left,\n");
+            writer.write("    numbersep=5pt,\n");
+            writer.write("    showspaces=false,\n");
+            writer.write("    showstringspaces=false,\n");
+            writer.write("    showtabs=false,\n");
+            writer.write("    tabsize=2\n");
+            writer.write("}\n");
+            writer.write("\\lstset{style=vscStyle}\n\n");
+            writer.write("\n\\title{" + inFile.getName() + " Documentation}\n");
+            writer.write("\\author{FRC Team 3161 Tronic Titans}\n\n");
+            writer.write("\\begin{document}\n\n");
+            writer.write("\\maketitle\n\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // method that returns true if we want to omit this line of code from the documentation, and false otherwise
